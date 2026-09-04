@@ -1,0 +1,95 @@
+﻿<Window x:Class="ReservasApp.Views.NuevaReservaView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ReservasApp.ViewModels"
+        Title="Nueva Reserva"
+        Height="680" Width="440"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        MinHeight="500"
+        Background="#F2F4F7">
+
+    <Window.DataContext>
+        <vm:NuevaReservaViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style x:Key="CampoTexto" TargetType="Control">
+            <Setter Property="Height" Value="38" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="Margin" Value="0,6,0,0" />
+            <Setter Property="BorderBrush" Value="#D0D5DD" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style x:Key="BotonPrimario" TargetType="Button">
+            <Setter Property="Height" Value="42" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#2F6FED" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#255CC7" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White" CornerRadius="10" Margin="24" Padding="28">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="18" ShadowDepth="2" Opacity="0.15" />
+        </Border.Effect>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Nueva Reserva" FontSize="20" FontWeight="Bold" Foreground="#1D2939" />
+                <TextBlock Text="Completa los datos de la reserva" FontSize="12" Foreground="#667085" Margin="0,4,0,20" />
+
+                <TextBlock Text="Aula" FontSize="12" Foreground="#344054" />
+                <ComboBox ItemsSource="{Binding ListaAulas}"
+                          SelectedItem="{Binding AulaSeleccionada}"
+                          DisplayMemberPath="Nombre"
+                          Style="{StaticResource CampoTexto}" />
+
+                <TextBlock Text="Fecha" FontSize="12" Foreground="#344054" Margin="0,14,0,0" />
+                <DatePicker SelectedDate="{Binding Fecha}" Style="{StaticResource CampoTexto}" />
+
+                <TextBlock Text="Hora (formato HH:mm, ej. 08:30)" FontSize="12" Foreground="#344054" Margin="0,14,0,0" />
+                <TextBox Text="{Binding HoraTexto, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource CampoTexto}" />
+
+                <TextBlock Text="Motivo" FontSize="12" Foreground="#344054" Margin="0,14,0,0" />
+                <TextBox Text="{Binding Motivo, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource CampoTexto}"
+                         Height="60"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True" />
+
+                <TextBlock Text="{Binding MensajeError}"
+                           Foreground="#D92D20" FontSize="12"
+                           TextWrapping="Wrap" Margin="0,10,0,0" />
+
+                <TextBlock Text="{Binding MensajeExito}"
+                           Foreground="#12B76A" FontSize="12"
+                           TextWrapping="Wrap" Margin="0,10,0,0" />
+
+                <Button Content="Guardar Reserva"
+                        Style="{StaticResource BotonPrimario}"
+                        Margin="0,20,0,0"
+                        Command="{Binding GuardarCommand}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>

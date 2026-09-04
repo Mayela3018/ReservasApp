@@ -1,0 +1,92 @@
+﻿<Window x:Class="ReservasApp.Views.AulasObjetosView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ReservasApp.ViewModels"
+        Title="Aulas (Objetos) — Conectado"
+        Height="480" Width="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#F2F4F7">
+
+    <Window.DataContext>
+        <vm:AulasObjetosViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style x:Key="CampoBusqueda" TargetType="TextBox">
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="BorderBrush" Value="#D0D5DD" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="BotonBuscar" TargetType="Button">
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Padding" Value="16,0" />
+            <Setter Property="Background" Value="#2F6FED" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,14">
+            <TextBlock Text="Aulas (Objetos)" FontSize="18" FontWeight="Bold" Foreground="#1D2939" />
+            <TextBlock Text="Modo conectado — SqlDataReader" FontSize="12" Foreground="#667085" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Style="{StaticResource CampoBusqueda}"
+                     Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,0,8,0" />
+
+            <Button Grid.Column="1" Content="Buscar"
+                    Style="{StaticResource BotonBuscar}"
+                    Command="{Binding BuscarCommand}" />
+        </Grid>
+
+        <Border Grid.Row="2" Background="White" CornerRadius="8" Padding="8">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="1" Opacity="0.10" />
+            </Border.Effect>
+
+            <DataGrid ItemsSource="{Binding Aulas}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      GridLinesVisibility="Horizontal"
+                      HeadersVisibility="Column"
+                      RowHeight="34"
+                      BorderThickness="0"
+                      Background="White">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding AulaId}" Width="60" />
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*" />
+                    <DataGridTextColumn Header="Capacidad" Binding="{Binding Capacidad}" Width="100" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</Window>
+    
